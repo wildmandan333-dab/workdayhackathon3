@@ -1,0 +1,68 @@
+{
+  "id": "testViewEdit",
+  "endPoints": [
+    {
+      "name": "competencies",
+      "baseUrlType": "workday-wql",
+      "url": "<%
+        const query = 'SELECT competency, competencyName FROM allCompetencies';
+        console.info('competency query is ' + query);
+        return query.urlEncode();
+      %>",
+      "authType": "sso"
+    }
+  ],
+  "presentation": {
+    "pageType": "EDIT",
+    "title": {
+      "type": "title",
+      "label": "WQL Diagnostic v4"
+    },
+    "body": {
+      "type": "section",
+      "children": [
+        {
+          "type": "section",
+          "label": "Endpoint Diagnostics",
+          "children": [
+            {
+              "type": "text",
+              "id": "endpointFired",
+              "label": "Did endpoint object exist?",
+              "enabled": false,
+              "value": "<% !empty competencies ? 'YES' : 'NO' %>"
+            },
+            {
+              "type": "text",
+              "id": "dataExists",
+              "label": "Does competencies.data exist?",
+              "enabled": false,
+              "value": "<% !empty competencies && !empty competencies.data ? 'YES' : 'NO' %>"
+            },
+            {
+              "type": "text",
+              "id": "firstName",
+              "label": "First competency name (.data as array)",
+              "enabled": false,
+              "value": "<% !empty competencies && !empty competencies.data && !empty competencies.data[0] ? competencies.data[0].competencyName : 'no item at .data[0]' %>"
+            },
+            {
+              "type": "text",
+              "id": "firstNameNested",
+              "label": "First competency name (.data.data as array)",
+              "enabled": false,
+              "value": "<% !empty competencies && !empty competencies.data && !empty competencies.data.data && !empty competencies.data.data[0] ? competencies.data.data[0].competencyName : 'no item at .data.data[0]' %>"
+            },
+            {
+              "type": "text",
+              "id": "rawDump",
+              "label": "Raw .data toString (first chars)",
+              "enabled": false,
+              "value": "<% !empty competencies && !empty competencies.data ? string:toString(competencies.data) : 'no data' %>"
+            }
+          ]
+        }
+      ]
+    }
+  }
+}

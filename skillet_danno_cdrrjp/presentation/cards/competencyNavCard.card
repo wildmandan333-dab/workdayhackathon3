@@ -1,0 +1,31 @@
+{
+  "id": "competencyNavCard",
+  "header": {
+    "title": "Competency Management",
+    "subtitle": "Choose an action to get started",
+    "icon": "wd-accent-skills"
+  },
+  "body": {
+    "type": "pillCard",
+    "pills": [
+      {
+        "label": "Create New Competency",
+        "taskReference": {
+          "taskId": "competencyCreate"
+        }
+      },
+      {
+        "label": "View / Edit Competency",
+        "taskReference": {
+          "taskId": "competencyViewEdit"
+        }
+      },
+      {
+        "label": "Find Employees by Competency",
+        "taskReference": {
+          "taskId": "findEmployeesByCompetency"
+        }
+      }
+    ]
+  }
+}

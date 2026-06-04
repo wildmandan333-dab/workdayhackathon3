@@ -1,0 +1,684 @@
+{
+  "id": "findEmployeesByCompetency",
+  "endPoints": [
+    {
+      "name": "getCompetencies",
+      "baseUrlType": "workday-wql",
+      "authType": "sso",
+      "deferred": true,
+      "url": "<%
+        var wql = 'SELECT workdayID as workdayID, competencyName AS descriptor FROM allCompetencies where competencyName CONTAINS \"' + searchValue + '\"   ORDER BY competencyName asc';
+        return wql.pathEncode();
+      %>",
+      "responseErrorDetail": {
+        "errorSummary": "<% [error].addAll(errors.map(e => e.error)).join('\\n') %>"
+      }
+    },
+    {
+      "name": "getAllCompetencies",
+      "baseUrlType": "workday-wql",
+      "authType": "sso",
+      "deferred": true,
+      "url": "<%
+        var wql = 'SELECT workdayID as workdayID, competencyName AS descriptor FROM allCompetencies ORDER BY competencyName asc';
+        return wql.pathEncode();
+      %>",
+      "responseErrorDetail": {
+        "errorSummary": "<% [error].addAll(errors.map(e => e.error)).join('\\n') %>"
+      }
+    },
+    {
+      "name": "getCompetencyCategories",
+      "baseUrlType": "workday-wql",
+      "authType": "sso",
+      "deferred": true,
+      "url": "<%
+        var wql = 'SELECT competencyCategories as categoryObject, competencyCategories{workdayID} as workdayID FROM allCompetencies WHERE ON competencyCategories competencyCategoryName CONTAINS \"' + searchValue + '\"   ORDER BY competencyCategories ASC';
+        return wql.pathEncode();
+      %>",
+      "responseErrorDetail": {
+        "errorSummary": "<% [error].addAll(errors.map(e => e.error)).join('\\n') %>"
+      }
+    },
+    {
+      "name": "getLocations",
+      "baseUrlType": "workday-wql",
+      "authType": "sso",
+      "deferred": true,
+      "url": "<%
+        var wql = 'SELECT location as descriptor, workdayID as workdayID FROM locationsUsedAsBusinessSite WHERE inactive = false and locationName CONTAINS \"' + searchValue + '\"  ORDER BY locationName ASC';
+        return wql.pathEncode();
+      %>",
+      "responseErrorDetail": {
+        "errorSummary": "<% [error].addAll(errors.map(e => e.error)).join('\\n') %>"
+      }
+    },
+    {
+      "name": "getCostCenters",
+      "baseUrlType": "workday-wql",
+      "authType": "sso",
+      "deferred": true,
+      "url": "<%
+        var wql = 'SELECT workdayID as workdayID, name as descriptor FROM costCenters WHERE name CONTAINS \"' + searchValue + '\"  ORDER BY name ASC';
+        return wql.pathEncode();
+      %>",
+      "responseErrorDetail": {
+        "errorSummary": "<% [error].addAll(errors.map(e => e.error)).join('\\n') %>"
+      }
+    },
+    {
+      "name": "getManagers",
+      "baseUrlType": "workday-wql",
+      "authType": "sso",
+      "deferred": true,
+      "url": "<%
+        var wql = 'SELECT fullName as descriptor, workdayID as workdayID FROM allWorkers WHERE isManager = true and fullName CONTAINS \"' + searchValue + '\" order by fullName asc';
+        return wql.pathEncode();
+      %>",
+      "responseErrorDetail": {
+        "errorSummary": "<% [error].addAll(errors.map(e => e.error)).join('\\n') %>"
+      }
+    },
+    {
+      "name": "getWorkersByCompetency",
+      "baseUrlType": "workday-wql",
+      "authType": "sso",
+      "deferred": true,
+      "url": "<%
+        var competencies = filterCompetency.selectedEntries.map(e => e.id);
+        var categories   = filterCompetencyCategory.selectedEntries.map(e => e.id);
+        var locations    = filterLocation.selectedEntries.map(e => e.id);
+        var departments  = filterDepartmentUnit.selectedEntries.map(e => e.id);
+        var managers     = filterManager.selectedEntries.map(e => e.id);
+
+        var wql = 'SELECT photo{workdayID}, employeeID, cf_IsActiveEmployee, firstName, lastName, jobTitle, location, costCenter_Name, activeCompetencySkills FROM allActiveAndTerminatedWorkers';
+
+        var hasWhere = false;
+
+        if (!empty categories) {
+          wql = wql + ' WHERE ON activeCompetencySkills competencyCategories in (' + categories.join(', ') + ')';
+          hasWhere = true;
+        }
+
+        if (!empty competencies) {
+          wql = wql + (hasWhere ? ' AND' : ' WHERE') + ' activeCompetencySkills in(' + competencies.map(c => '\"' + c + '\"').join(', ') + ')';
+          hasWhere = true;
+        }
+
+        if (!empty locations) {
+          wql = wql + (hasWhere ? ' AND' : ' WHERE') + ' location in (' + locations.map(c => '\"' + c + '\"').join(', ') + ')';
+          hasWhere = true;
+        }
+
+        if (!empty departments) {
+          wql = wql + (hasWhere ? ' AND' : ' WHERE') + ' cf_CF_LRV_Worker_CostCenter_WorkdayID in (' + departments.map(c => '\"' + c + '\"').join(', ') + ')';
+          hasWhere = true;
+        }
+
+        if (!empty managers) {
+          wql = wql + (hasWhere ? ' AND' : ' WHERE') + ' cf_CF_LRV_ManagerLevel01_WorkerID in (' + managers.map(c => '\"' + c + '\"').join(', ') + ')';
+          hasWhere = true;
+        }
+
+        if (filterAvailableOnly.value == true) {
+          wql = wql + (hasWhere ? ' AND' : ' WHERE') + ' cf_IsActiveEmployee = true';
+        } else {
+          wql = wql + (hasWhere ? ' AND' : ' WHERE') + ' cf_IsActiveEmployee = false';
+        }
+
+        wql = wql + ' ORDER BY lastName ASC';
+        return wql.pathEncode();
+      %>",
+      "responseErrorDetail": {
+        "errorSummary": "<% [error].addAll(errors.map(e => e.error)).join('\\n') %>"
+      }
+    }
+  ],
+  "presentation": {
+    "pageType": "EDIT",
+    "title": {
+      "type": "title",
+      "label": "Find Employees by Competency"
+    },
+    "body": {
+      "type": "section",
+      "children": [
+        {
+          "type": "section",
+          "children": [
+            {
+              "type": "richText",
+              "enabled": false,
+              "value": "<% '<p style=\"font-size: 14px;\">Describe the role, project, or competency profile you are staffing for. The AI agent will identify required competencies, search the workforce, and return ranked matches with explanations.</p>' %>"
+            }
+          ]
+        },
+        {
+          "type": "section",
+          "label": "Staffing Request",
+          "children": [
+            {
+              "type": "textArea",
+              "id": "staffingPrompt",
+              "label": "Describe what you need",
+              "placeholder": "Example: I need a senior data engineer for a 6-month Snowflake migration. Strong Python and SQL, some change management experience preferred.",
+              "value": "<% '' %>"
+            },
+            {
+              "type": "pageActionButton",
+              "id": "btnFindMatches",
+              "label": "Find Matches",
+              "onClick": "<%
+var promptText = staffingPrompt.value;
+
+if (!empty promptText) {
+  var promptLower = promptText.lowerCase();
+  var allComps = getAllCompetencies.invoke().data;
+  var autoMatched = [];
+  var ci = 0;
+  while (ci < size(allComps)) {
+    var comp = allComps[ci];
+    var compName = comp.descriptor.lowerCase();
+    if (string:contains(promptLower, compName)) {
+      autoMatched.add({ 'id': comp.workdayID, 'descriptor': comp.descriptor });
+    }
+    ci = ci + 1;
+  }
+  if (!empty autoMatched) {
+    var existingIds = filterCompetency.selectedEntries.map(e => e.id);
+    var newIds = existingIds;
+    var mi = 0;
+    while (mi < size(autoMatched)) {
+      var m = autoMatched[mi];
+      if (!newIds.contains(m.id)) {
+        newIds.add(m.id);
+      }
+      mi = mi + 1;
+    }
+    filterCompetency.setValue(newIds);
+  }
+}
+
+var selectedCompetencies = filterCompetency.selectedEntries.map(e => e.descriptor);
+var selectedIds = filterCompetency.selectedEntries.map(e => e.id);
+var totalSelected = empty selectedIds ? 0 : size(selectedIds);
+
+if (totalSelected == 0) {
+  noCompetencyWarning.setVisible(true);
+} else {
+  noCompetencyWarning.setVisible(false);
+
+  var result = getWorkersByCompetency.invoke();
+  var resultData = result['data'];
+  var resultSize = empty resultData ? 0 : size(resultData);
+
+  var enrichedData = [];
+  var ri = 0;
+  while (ri < resultSize) {
+    var worker = resultData[ri];
+    var skills = !empty worker.activeCompetencySkills ? worker.activeCompetencySkills : [];
+    var skillCount = size(skills);
+
+    var matchedCount = 0;
+    var fi = 0;
+    while (fi < totalSelected) {
+      var selId = selectedIds[fi];
+      var si = 0;
+      while (si < skillCount) {
+        var sk = skills[si];
+        if (!empty sk && !empty sk.id && sk.id == selId) {
+          matchedCount = matchedCount + 1;
+        }
+        si = si + 1;
+      }
+      fi = fi + 1;
+    }
+
+    var pct = totalSelected == 0 ? 100 : matchedCount * 100 / totalSelected;
+
+    var skillLine = '';
+    var sni = 0;
+    var maxShow = 5;
+    var shown = 0;
+    while (sni < skillCount && shown < maxShow) {
+      var snsk = skills[sni];
+      if (!empty snsk && !empty snsk.descriptor) {
+        skillLine = skillLine + (shown > 0 ? ', ' : '') + snsk.descriptor;
+        shown = shown + 1;
+      }
+      sni = sni + 1;
+    }
+    if (skillCount > maxShow) {
+      skillLine = skillLine + ' +' + (skillCount - maxShow) + ' more';
+    }
+    if (empty skillLine) {
+      skillLine = 'No competencies listed';
+    }
+
+    var locStr = (!empty worker.location && !empty worker.location.descriptor) ? worker.location.descriptor : 'N/A';
+    var photoID = (!empty worker.photo && !empty worker.photo.workdayID) ? worker.photo.workdayID : '';
+
+    enrichedData.add({
+      'firstName'  : !empty worker.firstName ? worker.firstName : '',
+      'lastName'   : !empty worker.lastName ? worker.lastName : '',
+      'jobTitle'   : !empty worker.jobTitle ? worker.jobTitle : 'No title',
+      'location'   : locStr,
+      'photoID'    : photoID,
+      'employeeID' : !empty worker.employeeID ? worker.employeeID : '',
+      'skillCount' : skillCount,
+      'skillLine'  : skillLine,
+      'pct'        : pct
+    });
+    ri = ri + 1;
+  }
+
+  var sortedData = list:sort(enrichedData, 'pct', false);
+  dynamicResults.setData(sortedData);
+
+  resultCount.setValue(
+    resultSize == 0
+      ? '<p style=\"font-size: 13px; color: #3069B5;\"><i>No employees found matching your search criteria. Try adjusting your filters.</i></p>'
+      : '<p style=\"font-size: 13px; color: #3069B5; margin-bottom: 8px;\"><b>' + resultSize + '</b> employee' + (resultSize == 1 ? '' : 's') + ' found</p>'
+  );
+
+  var strongCount  = 0;
+  var goodCount    = 0;
+  var partialCount = 0;
+  var si2 = 0;
+  while (si2 < size(enrichedData)) {
+    var ep = enrichedData[si2].pct;
+    if (ep >= 80) { strongCount = strongCount + 1; }
+    else if (ep >= 60) { goodCount = goodCount + 1; }
+    else { partialCount = partialCount + 1; }
+    si2 = si2 + 1;
+  }
+  resultSummary.setValue(
+    resultSize == 0 ? '' :
+    '<p style=\"font-size: 12px; margin: 4px 0;\">' +
+    '<span style=\"color: #2E7D32; font-weight: bold;\">&#9679; ' + strongCount + ' strong match' + (strongCount == 1 ? '' : 'es') + ' (80%+)</span>' +
+    '&nbsp;&nbsp;&nbsp;' +
+    '<span style=\"color: #E65100; font-weight: bold;\">&#9679; ' + goodCount + ' good match' + (goodCount == 1 ? '' : 'es') + ' (60-79%)</span>' +
+    '&nbsp;&nbsp;&nbsp;' +
+    '<span style=\"color: #C62828; font-weight: bold;\">&#9679; ' + partialCount + ' partial match' + (partialCount == 1 ? '' : 'es') + ' (&lt;60%)</span>' +
+    '</p>'
+  );
+}
+              %>"
+            }
+          ]
+        },
+        {
+          "type": "section",
+          "label": "Optional Filters",
+          "children": [
+            {
+              "type": "instanceList",
+              "multiSelect": true,
+              "id": "filterCompetency",
+              "label": "Competency",
+              "values": "<%
+                getCompetencies.invoke({ 'searchValue': '' }).data.map(u => ({
+                  'id'         : u.workdayID,
+                  'descriptor' : u.descriptor
+                }))
+              %>",
+              "onSearch": "<%
+                var q = event.query;
+                getCompetencies.invoke({ 'searchValue': empty q ? '' : q }).data.map(u => ({
+                  'id'         : u.workdayID,
+                  'descriptor' : u.descriptor
+                }))
+              %>"
+            },
+            {
+              "type": "instanceList",
+              "multiSelect": true,
+              "id": "filterCompetencyCategory",
+              "label": "Competency Category",
+              "values": "<%
+                var seen = [];
+                getCompetencyCategories.invoke({ 'searchValue': '' }).data
+                  .filter(u => !empty u.categoryObject)
+                  .map(u => u.categoryObject[0])
+                  .filter(cat => !empty cat)
+                  .filter(cat => {
+                    if (seen.contains(cat.id)) return false;
+                    seen.add(cat.id);
+                    return true;
+                  })
+                  .map(cat => ({
+                    'id'         : cat.id,
+                    'descriptor' : cat.descriptor
+                  }))
+              %>",
+              "onSearch": "<%
+                var seen = [];
+                var q = event.query;
+                getCompetencyCategories.invoke({ 'searchValue': empty q ? '' : q }).data
+                  .filter(u => !empty u.categoryObject)
+                  .map(u => u.categoryObject[0])
+                  .filter(cat => !empty cat)
+                  .filter(cat => {
+                    if (seen.contains(cat.id)) return false;
+                    seen.add(cat.id);
+                    return true;
+                  })
+                  .map(cat => ({
+                    'id'         : cat.id,
+                    'descriptor' : cat.descriptor
+                  }))
+              %>"
+            },
+            {
+              "type": "instanceList",
+              "multiSelect": true,
+              "id": "filterLocation",
+              "label": "Location",
+              "values": "<%
+                getLocations.invoke({ 'searchValue': '' }).data.map(u => ({
+                  'id'         : u.workdayID,
+                  'descriptor' : u.descriptor.descriptor
+                }))
+              %>",
+              "onSearch": "<%
+                var q = event.query;
+                getLocations.invoke({ 'searchValue': empty q ? '' : q }).data.map(i => ({
+                  'id'         : i.workdayID,
+                  'descriptor' : i.descriptor.descriptor
+                }))
+              %>"
+            },
+            {
+              "type": "instanceList",
+              "multiSelect": true,
+              "id": "filterDepartmentUnit",
+              "label": "Department/Unit",
+              "values": "<%
+                getCostCenters.invoke({ 'searchValue': '' }).data.map(u => ({
+                  'id'         : u.workdayID,
+                  'descriptor' : u.descriptor
+                }))
+              %>",
+              "onSearch": "<%
+                var q = event.query;
+                getCostCenters.invoke({ 'searchValue': empty q ? '' : q }).data.map(i => ({
+                  'id'         : i.workdayID,
+                  'descriptor' : i.descriptor
+                }))
+              %>"
+            },
+            {
+              "type": "instanceList",
+              "multiSelect": true,
+              "id": "filterManager",
+              "label": "Manager",
+              "values": "<%
+                getManagers.invoke({ 'searchValue': '' }).data.map(u => ({
+                  'id'         : u.workdayID,
+                  'descriptor' : u.descriptor
+                }))
+              %>",
+              "onSearch": "<%
+                var q = event.query;
+                getManagers.invoke({ 'searchValue': empty q ? '' : q }).data.map(i => ({
+                  'id'         : i.workdayID,
+                  'descriptor' : i.descriptor
+                }))
+              %>"
+            },
+            {
+              "type": "checkBox",
+              "id": "filterAvailableOnly",
+              "label": "Active employees only",
+              "value": "<% true %>"
+            },
+            {
+              "type": "checkBox",
+              "id": "sortToggle",
+              "label": "Sort alphabetically (uncheck = best match first)",
+              "value": "<% false %>"
+            },
+            {
+              "type": "pageActionButton",
+              "id": "btnClearAll",
+              "label": "Clear All",
+              "onClick": "<%
+filterCompetency.setValue([]);
+filterCompetencyCategory.setValue([]);
+filterLocation.setValue([]);
+filterDepartmentUnit.setValue([]);
+filterManager.setValue([]);
+filterAvailableOnly.setValue(true);
+sortToggle.setValue(false);
+staffingPrompt.setValue('');
+resultCount.setValue('');
+resultSummary.setValue('');
+dynamicResults.setData([]);
+noCompetencyWarning.setVisible(false);
+              %>"
+            },
+            {
+              "type": "pageActionButton",
+              "id": "btnSearch",
+              "label": "Search",
+              "onClick": "<%
+var selectedIds = filterCompetency.selectedEntries.map(e => e.id);
+var selectedNames = filterCompetency.selectedEntries.map(e => e.descriptor);
+var totalSelected = empty selectedIds ? 0 : size(selectedIds);
+
+noCompetencyWarning.setVisible(totalSelected == 0);
+
+if (totalSelected > 0) {
+
+var result = getWorkersByCompetency.invoke();
+var resultData = result['data'];
+var resultSize = empty resultData ? 0 : size(resultData);
+
+var enrichedData = [];
+var ri = 0;
+while (ri < resultSize) {
+  var worker = resultData[ri];
+  var skills = !empty worker.activeCompetencySkills ? worker.activeCompetencySkills : [];
+  var skillCount = size(skills);
+
+  var matchedCount = 0;
+  var fi = 0;
+  while (fi < totalSelected) {
+    var selId = selectedIds[fi];
+    var si = 0;
+    while (si < skillCount) {
+      var sk = skills[si];
+      if (!empty sk && !empty sk.id && sk.id == selId) {
+        matchedCount = matchedCount + 1;
+      }
+      si = si + 1;
+    }
+    fi = fi + 1;
+  }
+
+  var pct = totalSelected == 0 ? 100 : matchedCount * 100 / totalSelected;
+
+  var skillLine = '';
+  var sni = 0;
+  var maxShow = 5;
+  var shown = 0;
+  while (sni < skillCount && shown < maxShow) {
+    var snsk = skills[sni];
+    if (!empty snsk && !empty snsk.descriptor) {
+      skillLine = skillLine + (shown > 0 ? ', ' : '') + snsk.descriptor;
+      shown = shown + 1;
+    }
+    sni = sni + 1;
+  }
+  if (skillCount > maxShow) {
+    skillLine = skillLine + ' +' + (skillCount - maxShow) + ' more';
+  }
+  if (empty skillLine) {
+    skillLine = 'No competencies listed';
+  }
+
+  var locStr = (!empty worker.location && !empty worker.location.descriptor) ? worker.location.descriptor : 'N/A';
+var photoID = (!empty worker.photo && !empty worker.photo.workdayID) ? worker.photo.workdayID : '';
+
+  enrichedData.add({
+    'firstName'  : !empty worker.firstName ? worker.firstName : '',
+    'lastName'   : !empty worker.lastName ? worker.lastName : '',
+    'jobTitle'   : !empty worker.jobTitle ? worker.jobTitle : 'No title',
+    'location'   : locStr,
+    'photoID'    : photoID,
+    'employeeID' : !empty worker.employeeID ? worker.employeeID : '',
+    'skillCount' : skillCount,
+    'skillLine'  : skillLine,
+    'pct'        : pct
+  });
+  ri = ri + 1;
+}
+
+var sortedData = sortToggle.value == true ? list:sort(enrichedData, 'lastName', true) : list:sort(enrichedData, 'pct', false);
+dynamicResults.setData(sortedData);
+
+resultCount.setValue(
+  resultSize == 0
+    ? '<p style=\"font-size: 13px; color: #3069B5;\"><i>No employees found matching your search criteria. Try adjusting your filters.</i></p>'
+    : '<p style=\"font-size: 13px; color: #3069B5; margin-bottom: 8px;\"><b>' + resultSize + '</b> employee' + (resultSize == 1 ? '' : 's') + ' found</p>'
+);
+
+var strongCount  = 0;
+var goodCount    = 0;
+var partialCount = 0;
+var si2 = 0;
+while (si2 < size(enrichedData)) {
+  var ep = enrichedData[si2].pct;
+  if (ep >= 80) { strongCount = strongCount + 1; }
+  else if (ep >= 60) { goodCount = goodCount + 1; }
+  else { partialCount = partialCount + 1; }
+  si2 = si2 + 1;
+}
+resultSummary.setValue(
+  resultSize == 0 ? '' :
+  '<p style=\"font-size: 12px; margin: 4px 0;\">' +
+  '<span style=\"color: #2E7D32; font-weight: bold;\">&#9679; ' + strongCount + ' strong match' + (strongCount == 1 ? '' : 'es') + ' (80%+)</span>' +
+  '&nbsp;&nbsp;&nbsp;' +
+  '<span style=\"color: #E65100; font-weight: bold;\">&#9679; ' + goodCount + ' good match' + (goodCount == 1 ? '' : 'es') + ' (60-79%)</span>' +
+  '&nbsp;&nbsp;&nbsp;' +
+  '<span style=\"color: #C62828; font-weight: bold;\">&#9679; ' + partialCount + ' partial match' + (partialCount == 1 ? '' : 'es') + ' (&lt;60%)</span>' +
+  '</p>'
+);
+
+}
+              %>"
+            }
+          ]
+        },
+        {
+          "type": "richText",
+          "id": "noCompetencyWarning",
+          "enabled": false,
+          "visible": "<% false %>",
+          "value": "<% '<p style=\"font-size: 13px; color: #C62828; font-weight: bold;\">&#9888; Please select at least one Competency before searching. Match scores are only meaningful when competencies are selected.</p>' %>"
+        },
+        {
+          "type": "richText",
+          "id": "resultSummary",
+          "enabled": false,
+          "value": "<% '' %>"
+        },
+        {
+          "type": "fieldSet",
+          "id": "debugFieldSet",
+          "visible": "false",
+          "children": [
+            {
+              "type": "richText",
+              "id": "debugOutput",
+              "label": "Raw Query Response",
+              "enabled": false,
+              "value": "<% '' %>"
+            },
+            {
+              "type": "richText",
+              "id": "debugWql",
+              "label": "Generated WQL",
+              "enabled": false,
+              "value": "<% '' %>"
+            }
+          ]
+        },
+        {
+          "type": "richText",
+          "id": "resultCount",
+          "enabled": false,
+          "value": "<% '' %>"
+        },
+        {
+          "type": "section",
+          "label": "What I Understood From Your Request",
+          "children": [
+            {
+              "type": "richText",
+              "enabled": false,
+              "value": "<% '<p style=\"font-size: 13px; color: #555;\"><i>After submitting a request, the AI will display its interpretation here. You will be able to edit the inferred competencies and ratings before searching.</i></p>' %>"
+            }
+          ]
+        },
+        {
+          "type": "dynamicSection",
+          "id": "dynamicResults",
+          "data": "<% [] %>",
+          "dataVariableName": "workerData",
+          "children": [
+            {
+              "type": "section",
+              "label": "Search Results",
+              "children": [
+                {
+                  "type": "loop",
+                  "id": "workerLoop",
+                  "on": "<% workerData %>",
+                  "as": "worker",
+                  "children": [
+                    {
+                      "type": "cardContainer",
+                      "cards": [
+                        {
+                          "type": "card",
+                          "cardId": "employeeMatchCard",
+                          "parameters": "<%
+                            {
+                              'employeeName' : worker.firstName + ' ' + worker.lastName,
+                              'jobTitle'     : worker.jobTitle,
+                              'location'     : worker.location,
+                              'matchScore'   : '' + worker.pct + '% Match',
+                              'matchColor'   : worker.pct >= 80 ? 'green' : worker.pct >= 60 ? 'orange' : 'red',
+                              'photoID'      : worker.photoID,
+                              'competencies' : [{'name': worker.skillLine}]
+                            }
+                          %>"
+                        }
+                      ]
+                    },
+                    {
+                      "type": "pageActionButton",
+                      "label": "View Talent Profile",
+                      "onClick": "<%  %>"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    "footer": {
+      "type": "footer",
+      "children": [
+        {
+          "type": "richText",
+          "enabled": false,
+          "value": "<% '<span style=\"font-size: 10px;\"><i>Developed for Workday Extend Hackathon</i></span>' %>"
+        }
+      ]
+    }
+  }
+}

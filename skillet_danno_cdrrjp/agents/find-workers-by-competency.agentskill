@@ -1,0 +1,69 @@
+---
+name: find-workers-by-competency
+description: >
+  Finds workers with specific competencies/skills from the filters selected in the listbox.
+  Uses WQL queries to search workers by competency, category, location, department, and manager.
+metadata:
+  tags:
+    - staffing
+    - competency
+    - worker-search
+allowed-tools:
+  - find_staffing_workers
+  - list_worker_direct_reports
+tool-wids:
+  - name: find_staffing_workers
+    wid: 30aeb92af72e100063e2955a0eff0000
+  - name: list_worker_direct_reports
+    wid: 0466c187aaa2100059952028eda60000
+---
+
+# Find Workers by Competency
+
+This skill helps find workers who have specific competencies/skills selected by the user in the competency listbox on the `findEmployeesByCompetency` page.
+
+## Context
+
+The user is viewing the **Find Employees by Competency** page (`findEmployeesByCompetency.pmd`). This page includes:
+- A multi-select **Competency** listbox (`filterCompetency`) where users select one or more competencies
+- Additional optional filters: Category, Location, Department, Manager
+- A **Find Matches** button that triggers the search
+- A **Search** button that executes a WQL query to find matching workers
+
+When the user clicks the "Find Matches" button, you should:
+1. Extract the selected competencies from the listbox
+2. Use the available tools to find workers with those competencies
+3. Return a ranked list of workers with their job titles, locations, and competency matches
+
+## Steps
+
+1. **Clarify the request**: Ask the user which competencies they've selected in the listbox, or confirm you should use whatever is currently selected.
+
+2. **Retrieve selected competencies**: If the user provides competency names or IDs from the listbox, note them for the search.
+
+3. **Search for workers**: Use `find_staffing_workers` to retrieve workers. Apply any additional filters the user has selected (location, department, manager, active status).
+
+4. **Analyze competency matches**: For each worker returned, check their `activeCompetencySkills` field to see which selected competencies they have.
+
+5. **Rank and format results**: 
+   - Calculate match percentage (how many selected competencies the worker has)
+   - Sort by best match first (highest percentage)
+   - Include: worker name, job title, location, list of matching competencies, match percentage
+
+6. **Present results**: Show a clear summary with:
+   - Total number of workers found
+   - Top matches with details
+   - Suggestion to adjust filters if few or no matches
+
+## Error Handling
+
+- If no competencies are selected, prompt the user to select at least one from the listbox
+- If no workers are found, suggest broadening the filters or checking different competencies
+- If the tool returns an error, explain it clearly and suggest next steps
+
+## Notes
+
+- The page's WQL query (`getWorkersByCompetency`) builds a dynamic query based on selected filters
+- Workers have an `activeCompetencySkills` field containing their competency list
+- The match percentage is: (matched competencies / total selected) × 100
+- Active employees can be filtered using the `cf_IsActiveEmployee` field

@@ -1,0 +1,301 @@
+{
+  "id": "competencyViewEdit",
+  "endPoints": [
+    {
+      "name": "allCompetencies",
+      "baseUrlType": "workday-wql",
+      "url": "<%
+        const query = 'SELECT competency, competencyName FROM allCompetencies ORDER BY competencyName';
+        return query.urlEncode();
+      %>",
+      "authType": "sso"
+    },
+    {
+      "name": "competencyDetail",
+      "baseUrlType": "workday-wql",
+      "authType": "sso",
+      "deferred": true,
+      "url": "<%
+        const compIdVal = !empty compSearch.value && !empty compSearch.value[0] ? compSearch.value[0] : '';
+        const query = 'SELECT workdayID, competency, competencyName, competencyCategories, competencyDefaultDescription, competencyUsedForTalentMatrix, inactive FROM allCompetencies WHERE workdayID contains \"' + compIdVal + '\"';
+        return query.urlEncode();
+      %>"
+    },
+    {
+      "name": "boLookupByWID",
+      "baseUrlType": "workday-wql",
+      "authType": "sso",
+      "deferred": true,
+      "url": "<%
+        const wid = compId.value;
+        const query = 'SELECT compWorkdayID, workdayID, trainingType, trainingFreq, manufacturer, equipmentName, modelNumber FROM z_practiceappdb_jrhrrz_competencyExtendeds WHERE compWorkdayID = \"' + wid + '\"';
+        return query.urlEncode();
+      %>"
+    },
+    {
+      "name": "launch_saveCompetencyOrch",
+      "baseUrlType": "workday-orch",
+      "url": "competencyCreateUpdate/launch",
+      "deferred": true,
+      "authType": "sso",
+      "httpMethod": "POST",
+      "onSend": "<%
+        var body = {
+          'createOrUpdate': 'Update',
+          'workdayID': compId.value,
+          'competencyName': compName.value,
+          'description': regex:replace(compDescription.value, '<[^>]+>', ''),
+          'usedForTalentMatrix': compUsedForTalentMatrix.value == true ? 'true' : 'false',
+          'inactive': compInactive.value == true ? 'true' : 'false',
+          'effectiveDate': !empty compEffectiveDate.value ? date:format(compEffectiveDate.value, 'yyyy-MM-dd') : '',
+          'categoryWIDs': !empty compCategory.value ? compCategory.value : [],
+          'trainingType': !empty trainingType.value ? trainingType.value : '',
+          'trainingFreq': !empty trainingFreq.value ? trainingFreq.value : '',
+          'manufacturer': !empty manufacturer.value ? manufacturer.value : '',
+          'equipmentName': !empty equipmentName.value ? equipmentName.value : '',
+          'modelNumber': !empty modelNumber.value ? modelNumber.value : ''
+        };
+        console.info('launch_saveCompetencyOrch (Update)==>' + json:asJSON(body));
+        return body;
+      %>",
+      "failOnStatusCodes": [
+        { "code": "400" },
+        { "code": "403" },
+        { "code": "500" }
+      ]
+    }
+  ],
+  "presentation": {
+    "pageType": "EDIT",
+    "title": {
+      "type": "title",
+      "label": "Competency View/Edit"
+    },
+    "body": {
+      "type": "section",
+      "children": [
+        {
+          "type": "section",
+          "label": "Search",
+          "children": [
+            {
+              "type": "dropdown",
+              "id": "compSearch",
+              "label": "Select a Competency",
+              "values": "<% allCompetencies.data.map(item => {'id': item.competency.id, 'descriptor': item.competencyName}) %>",
+              "onChange": "<%
+                var resp = competencyDetail.invoke();
+                if (!empty resp && !empty resp.data && !empty resp.data[0]) {
+                  var rec = resp.data[0];
+
+                  compId.value = rec.workdayID;
+                  compName.value = rec.competencyName;
+                  compUsedForTalentMatrix.value = rec.competencyUsedForTalentMatrix;
+                  compInactive.value = rec.inactive;
+                  compDescription.value = rec.competencyDefaultDescription;
+
+                  compCategory.value = !empty rec.competencyCategories
+                    ? rec.competencyCategories.map(c => c.id)
+                    : [];
+
+                  var picked = !empty compCategory.value ? compCategory.value : [];
+                  var equipmentWID = '61aa27fd07051000cff37dbf8fa30000';
+                  var jobSpecWID = '61aa27fd07051000cff37d25d3990001';
+                  var locSpecWID = '61aa27fd07051000cff37d25d3990002';
+
+                  var hasEquipment = picked.contains(equipmentWID);
+                  var hasJobSpec = picked.contains(jobSpecWID);
+                  var hasLocSpec = picked.contains(locSpecWID);
+                  var hasTrainingCategory = hasEquipment || hasJobSpec || hasLocSpec;
+
+                  trainingType.setVisible(hasTrainingCategory);
+                  trainingFreq.setVisible(hasTrainingCategory);
+                  manufacturer.setVisible(hasEquipment);
+                  equipmentName.setVisible(hasEquipment);
+                  modelNumber.setVisible(hasEquipment);
+
+                  trainingType.value = '';
+                  trainingFreq.value = '';
+                  manufacturer.value = '';
+                  equipmentName.value = '';
+                  modelNumber.value = '';
+                  boInstanceId.value = '';
+
+                  var boResp = boLookupByWID.invoke();
+                  console.info('BO lookup response: ' + json:asJSON(boResp));
+
+                  if (!empty boResp && !empty boResp.data && !empty boResp.data[0]) {
+                    var boRec = boResp.data[0];
+                    boInstanceId.value = boRec.workdayID;
+                    trainingType.value = !empty boRec.trainingType ? boRec.trainingType : '';
+                    trainingFreq.value = !empty boRec.trainingFreq ? boRec.trainingFreq : '';
+                    manufacturer.value = !empty boRec.manufacturer ? boRec.manufacturer : '';
+                    equipmentName.value = !empty boRec.equipmentName ? boRec.equipmentName : '';
+                    modelNumber.value = !empty boRec.modelNumber ? boRec.modelNumber : '';
+                    console.info('BO row found, instance ID: ' + boInstanceId.value);
+                  } else {
+                    console.info('No BO row exists for this competency');
+                  }
+                }
+              %>"
+            }
+          ]
+        },
+        {
+          "type": "section",
+          "label": "Competency Details",
+          "children": [
+            {
+              "type": "text",
+              "id": "compId",
+              "label": "Competency ID",
+              "enabled": false,
+              "value": "<% '' %>"
+            },
+            {
+              "type": "text",
+              "id": "boInstanceId",
+              "label": "BO Instance ID",
+              "enabled": false,
+              "visible": false,
+              "value": "<% '' %>"
+            },
+            {
+              "type": "text",
+              "id": "compName",
+              "label": "Name",
+              "required": true,
+              "value": "<% '' %>"
+            },
+            {
+              "type": "instanceList",
+              "id": "compCategory",
+              "label": "Category",
+              "multiSelect": true,
+              "values": "<% [
+                {'id': 'a1c970bd7c6945388bde0693272775ca', 'descriptor': 'Ability'},
+                {'id': 'f21c0c547627422f95f6a8cb59d49fb7', 'descriptor': 'Behavior'},
+                {'id': '61aa27fd07051000cff37d25d3990000', 'descriptor': 'Core Hospital'},
+                {'id': '61aa27fd07051000cff37dbf8fa30000', 'descriptor': 'Equipment'},
+                {'id': '61aa27fd07051000cff37d25d3990001', 'descriptor': 'Job Specific'},
+                {'id': 'f84bcb568f4648cfadf78649d425591c', 'descriptor': 'Knowledge'},
+                {'id': '61aa27fd07051000cff37d25d3990002', 'descriptor': 'Location Specific'},
+                {'id': '61aa27fd07051000cff37c8c096a0000', 'descriptor': 'Manager Added'},
+                {'id': '6729e2fa56fd4f25b5871ae1726ddaa5', 'descriptor': 'Skill'}
+              ] %>",
+              "onChange": "<%
+                var picked = !empty compCategory.value ? compCategory.value : [];
+                var equipmentWID = '61aa27fd07051000cff37dbf8fa30000';
+                var jobSpecWID = '61aa27fd07051000cff37d25d3990001';
+                var locSpecWID = '61aa27fd07051000cff37d25d3990002';
+
+                var hasEquipment = picked.contains(equipmentWID);
+                var hasJobSpec = picked.contains(jobSpecWID);
+                var hasLocSpec = picked.contains(locSpecWID);
+                var hasTrainingCategory = hasEquipment || hasJobSpec || hasLocSpec;
+
+                trainingType.setVisible(hasTrainingCategory);
+                trainingFreq.setVisible(hasTrainingCategory);
+                manufacturer.setVisible(hasEquipment);
+                equipmentName.setVisible(hasEquipment);
+                modelNumber.setVisible(hasEquipment);
+              %>"
+            },
+            {
+              "type": "checkBox",
+              "id": "compUsedForTalentMatrix",
+              "label": "Used For Talent Matrix",
+              "value": "<% false %>"
+            },
+            {
+              "type": "checkBox",
+              "id": "compInactive",
+              "label": "Inactive",
+              "value": "<% false %>"
+            },
+            {
+              "type": "date",
+              "id": "compEffectiveDate",
+              "label": "Effective Date",
+              "required": true,
+              "value": "<% date:getTodaysDate(date:getDateTimeZone(userTimeZone)) %>"
+            },
+            {
+              "type": "richText",
+              "id": "compDescription",
+              "label": "Competency Description",
+              "value": "<% '' %>"
+            }
+          ]
+        },
+        {
+          "type": "fieldSet",
+          "id": "customFieldsSet",
+          "label": "Additional Details (Custom)",
+          "children": [
+            {
+              "type": "text",
+              "id": "trainingType",
+              "label": "Type of Training",
+              "value": "<% '' %>",
+              "visible": false
+            },
+            {
+              "type": "text",
+              "id": "trainingFreq",
+              "label": "Training Frequency",
+              "value": "<% '' %>",
+              "visible": false
+            },
+            {
+              "type": "text",
+              "id": "manufacturer",
+              "label": "Manufacturer",
+              "value": "<% '' %>",
+              "visible": false
+            },
+            {
+              "type": "text",
+              "id": "equipmentName",
+              "label": "Equipment Name",
+              "value": "<% '' %>",
+              "visible": false
+            },
+            {
+              "type": "text",
+              "id": "modelNumber",
+              "label": "Model Number or Series",
+              "value": "<% '' %>",
+              "visible": false
+            }
+          ]
+        },
+        {
+          "type": "section",
+          "children": [
+            {
+              "type": "pageActionButton",
+              "id": "btnSave",
+              "label": "Save Competency",
+              "onClick": "<%
+                  console.info('Save button clicked');
+
+                  var resp = launch_saveCompetencyOrch.invoke();
+                  console.info('SOAP response: ' + json:asJSON(resp));
+
+                  saveStatus.value = 'Saved at ' + date:format(date:now(), 'HH:mm:ss');
+                %>"
+            },
+            {
+              "type": "text",
+              "id": "saveStatus",
+              "label": "Save status",
+              "enabled": false,
+              "value": "<% '' %>"
+            }
+          ]
+        }
+      ]
+    }
+  }
+}

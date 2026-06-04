@@ -1,0 +1,37 @@
+{
+  "id": "employeeMatchCard",
+  "parameters": [
+    "employeeName",
+    "jobTitle",
+    "location",
+    "matchScore",
+    "matchColor",
+    "competencies",
+    "photoID"
+  ],
+  "header": {
+    "title": "<% employeeName %>",
+    "indicator": {
+      "label": "<% matchScore %>",
+      "color": "<% matchColor %>"
+    }
+  },
+  "body": {
+    "type": "listCard",
+    "on": "<% competencies %>",
+    "as": "comp",
+    "template": {
+      "label": "<% jobTitle + ' · ' + location %>",
+      "value": "<% comp.name %>",
+      "image": {
+        "endPoint": {
+          "name": "workerProfilePhoto",
+          "baseUrlType": "workday-workerPhoto",
+          "authType": "sso",
+          "url": "<% !empty photoID ? '/' + photoID : '' %>"
+        },
+        "profile": true
+      }
+    }
+  }
+}

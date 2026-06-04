@@ -1,0 +1,139 @@
+{
+  "id": 1,
+  "name": "CompetencyExtended",
+  "label": "Competency Extended",
+  "defaultSecurityDomains": ["CustomCompetency"],
+  "defaultCollection": {
+    "name": "competencyExtendeds",
+    "label": "Competency Extendeds"
+  },
+  "fields": [
+    {
+      "securityDomains": [],
+      "enableSearch": false,
+      "enableIndex": true,
+      "isPurgeable": false,
+      "useForDisplay": false,
+      "isReferenceId": true,
+      "type": "TEXT",
+      "name": "compWorkdayID",
+      "id": 1
+    },
+    {
+      "enableSearch": false,
+      "enableIndex": false,
+      "isPurgeable": false,
+      "useForDisplay": false,
+      "isReferenceId": false,
+      "type": "TEXT",
+      "name": "trainingType",
+      "id": 2
+    },
+    {
+      "enableSearch": false,
+      "enableIndex": false,
+      "isPurgeable": false,
+      "useForDisplay": false,
+      "isReferenceId": false,
+      "label": "Training Frequency",
+      "type": "TEXT",
+      "name": "trainingFreq",
+      "id": 3
+    },
+    {
+      "enableSearch": false,
+      "enableIndex": false,
+      "isPurgeable": false,
+      "useForDisplay": false,
+      "isReferenceId": false,
+      "type": "TEXT",
+      "name": "manufacturer",
+      "id": 4
+    },
+    {
+      "enableSearch": false,
+      "enableIndex": false,
+      "isPurgeable": false,
+      "useForDisplay": false,
+      "isReferenceId": false,
+      "type": "TEXT",
+      "name": "equipmentName",
+      "id": 5
+    },
+    {
+      "enableSearch": false,
+      "enableIndex": false,
+      "isPurgeable": false,
+      "useForDisplay": false,
+      "isReferenceId": false,
+      "label": "Model Number or Series",
+      "type": "TEXT",
+      "name": "modelNumber",
+      "id": 6
+    },
+    {
+      "id": 7,
+      "name": "location",
+      "type": "TEXT",
+      "description": "Site location",
+      "isReferenceId": false,
+      "useForDisplay": false,
+      "isPurgeable": false,
+      "enableIndex": false,
+      "enableSearch": false
+    },
+    {
+      "id": 8,
+      "name": "costCenter",
+      "type": "TEXT",
+      "description": "Department cost center",
+      "isReferenceId": false,
+      "useForDisplay": false,
+      "isPurgeable": false,
+      "enableIndex": false,
+      "enableSearch": false
+    },
+    {
+      "id": 9,
+      "name": "discipline",
+      "type": "TEXT",
+      "description": "OT/PT/RN etc",
+      "isReferenceId": false,
+      "useForDisplay": false,
+      "isPurgeable": false,
+      "enableIndex": false,
+      "enableSearch": false
+    },
+    {
+      "id": 10,
+      "name": "competencyType",
+      "type": "TEXT",
+      "description": "Diagnosis / Equipment / Inpatient / JIT Orientation",
+      "isReferenceId": false,
+      "useForDisplay": false,
+      "isPurgeable": false,
+      "enableIndex": false,
+      "enableSearch": false
+    },
+    {
+      "id": 11,
+      "name": "riskTier",
+      "type": "TEXT",
+      "description": "Patient Safety: Death / Severe / Moderate",
+      "isReferenceId": false,
+      "useForDisplay": false,
+      "isPurgeable": false,
+      "enableIndex": false,
+      "enableSearch": false
+    },
+    {
+      "id": 12,
+      "name": "lastRetrainingDate",
+      "type": "DATE",
+      "description": "Compliance date",
+      "isPurgeable": false,
+      "enableIndex": false,
+      "precision": "DAY"
+    }
+  ]
+}

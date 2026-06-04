@@ -1,0 +1,70 @@
+{
+  "appProperties": [ ],
+  "tasks": [
+    {
+      "id": "competencyCreate",
+      "routingPattern": "/competencyCreate",
+      "page": {
+        "id": "competencyCreate"
+      }
+    },
+    {
+      "id": "competencyLanding",
+      "routingPattern": "/",
+      "page": {
+        "id": "competencyLanding"
+      }
+    },
+    {
+      "id": "findEmployeesByCompetency",
+      "routingPattern": "/findEmployeesByCompetency",
+      "page": {
+        "id": "findEmployeesByCompetency"
+      }
+    },
+    {
+      "id": "competencyViewEdit",
+      "routingPattern": "/competencyViewEdit",
+      "page": {
+        "id": "competencyViewEdit"
+      }
+    },
+    {
+      "id": "testViewEdit",
+      "routingPattern": "/testViewEdit",
+      "page": {
+        "id": "testViewEdit"
+      }
+    },
+    {
+      "id": "competencyBackup",
+      "routingPattern": "/competencyBackup",
+      "page": {
+        "id": "competencyBackup"
+      }
+    }
+  ],
+  "applicationId": "skillet_danno_cdrrjp",
+  "dataProviders": [
+    {
+      "key": "workday-staffing",
+      "value": "https://api.workday.com/staffing/v7"
+    },
+    {
+      "key": "workday-wql",
+      "value": "https://api.workday.com/wql/v1/data?query="
+    },
+    {
+      "key": "workday-orch",
+      "value": "https://api.workday.com/orchestrate/v1/apps/<%site.applicationId%>/orchestrations/"
+    },
+    {
+      "key": "app",
+      "value": "https://api.workday.com/apps/<% site.applicationId %>/v1/"
+    },
+    {
+      "key": "workday-workerPhoto",
+      "value": "https://api.workday.com/common/v1/workerRawPhotoData"
+    }
+  ]
+}

@@ -1,0 +1,51 @@
+{
+  "id": "competencyLanding",
+  "securityDomains": [],
+  "endPoints": [],
+  "presentation": {
+    "pageType": "VIEW",
+    "title": {
+      "type": "title",
+      "label": "Competency Management"
+    },
+    "body": {
+      "type": "section",
+      "children": [
+        {
+          "type": "section",
+          "children": [
+            {
+              "type": "richText",
+              "enabled": false,
+              "value": "<% '<p style=\"font-size: 14px;\">Welcome to the Extended Competency Management app. This app augments Workday\\'s delivered competency capabilities with extended attributes stored in an Extend business object, plus AI-powered tools for finding the right people for the right work.</p>' %>"
+            }
+          ]
+        },
+        {
+          "layout": "grid",
+          "type": "cardContainer",
+          "id": "navContainer",
+          "cards": [
+            {
+              "type": "card",
+              "cardId": "competencyNavCard",
+              "parameters": {
+                "MyKey1": "My String Value"
+              }
+            }
+          ]
+        }
+      ]
+    },
+    "footer": {
+      "type": "footer",
+      "children": [
+        {
+          "type": "richText",
+          "enabled": false,
+          "value": "<% '<span style=\"font-size: 10px;\"><i>Developed for Workday Extend Hackathon</i></span>' %>"
+        }
+      ]
+    }
+  }
+}
