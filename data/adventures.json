@@ -129,7 +129,29 @@
     "free": true,
     "gallery": ["madison-main.svg", "madison-alt.svg"],
     "photo": "madison-main.svg",
-    "relatedIds": ["ohio-river-byway", "west-baden-springs"]
+    "relatedIds": ["ohio-river-byway", "west-baden-springs", "lawrenceburg"]
+  },
+  {
+    "id": "lawrenceburg",
+    "title": "Lawrenceburg",
+    "category": "small-towns",
+    "description": "A historic Ohio River town that's equal parts distillery country and riverboat casino, with a walkable downtown that still remembers its steamboat days.",
+    "location": "Lawrenceburg, IN",
+    "lat": 39.0909,
+    "lng": -84.8508,
+    "drivingTime": "1 hr 20 min from Indianapolis",
+    "distanceMiles": 80,
+    "difficulty": "Easy",
+    "bestSeason": "Fall",
+    "hours": "Open year-round",
+    "admission": "Free to walk around",
+    "website": "",
+    "kidFriendly": true,
+    "dogFriendly": true,
+    "free": true,
+    "gallery": ["lawrenceburg-main.svg", "lawrenceburg-alt.svg"],
+    "photo": "lawrenceburg-main.svg",
+    "relatedIds": ["madison", "ohio-river-byway"]
   },
   {
     "id": "fair-oaks-farms",
@@ -217,7 +239,7 @@
     "free": true,
     "gallery": ["ohio-river-byway-main.svg", "ohio-river-byway-alt.svg"],
     "photo": "ohio-river-byway-main.svg",
-    "relatedIds": ["madison", "marengo-cave"]
+    "relatedIds": ["madison", "marengo-cave", "lawrenceburg"]
   },
   {
     "id": "bridgeton-covered-bridge",

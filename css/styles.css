@@ -204,14 +204,14 @@ p {
 .nav-brand {
   display: flex;
   align-items: center;
-  gap: 0.5rem;
+  gap: 0.6rem;
   font-family: var(--font-head);
   font-weight: 700;
-  font-size: 1.25rem;
+  font-size: 1.55rem;
   color: var(--forest-dark);
 }
 .nav-brand .dice {
-  font-size: 1.4rem;
+  font-size: 1.9rem;
 }
 
 .nav-links {
@@ -306,6 +306,8 @@ p {
   font-weight: 700;
   margin-bottom: 0.25rem;
   letter-spacing: -0.02em;
+  color: var(--white);
+  text-shadow: 0 2px 14px rgba(0, 0, 0, 0.45);
 }
 .hero-logo .wild {
   color: var(--orange);
