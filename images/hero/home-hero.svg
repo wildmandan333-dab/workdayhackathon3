@@ -1,0 +1,60 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 1000" width="1600" height="1000" role="img" aria-label="Rolling Indiana hills at dusk with a winding trail">
+  <defs>
+    <linearGradient id="sky" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#0f2f24"/>
+      <stop offset="45%" stop-color="#1d4b38"/>
+      <stop offset="100%" stop-color="#2F6F4E"/>
+    </linearGradient>
+    <radialGradient id="sun" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#ffb347" stop-opacity="0.95"/>
+      <stop offset="60%" stop-color="#ff8c42" stop-opacity="0.55"/>
+      <stop offset="100%" stop-color="#ff8c42" stop-opacity="0"/>
+    </radialGradient>
+    <linearGradient id="hillFar" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#173b2c"/>
+      <stop offset="100%" stop-color="#0e2a20"/>
+    </linearGradient>
+    <linearGradient id="hillMid" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#123023"/>
+      <stop offset="100%" stop-color="#0a201a"/>
+    </linearGradient>
+    <linearGradient id="hillNear" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#0b2119"/>
+      <stop offset="100%" stop-color="#061712"/>
+    </linearGradient>
+  </defs>
+
+  <rect width="1600" height="1000" fill="url(#sky)"/>
+  <circle cx="1180" cy="330" r="260" fill="url(#sun)"/>
+  <circle cx="1180" cy="330" r="90" fill="#ffd27f" opacity="0.9"/>
+
+  <!-- stars -->
+  <g fill="#ffffff" opacity="0.5">
+    <circle cx="120" cy="90" r="2"/>
+    <circle cx="220" cy="160" r="1.5"/>
+    <circle cx="340" cy="70" r="2"/>
+    <circle cx="80" cy="240" r="1.5"/>
+    <circle cx="460" cy="120" r="1.5"/>
+    <circle cx="600" cy="60" r="2"/>
+    <circle cx="700" cy="150" r="1.5"/>
+  </g>
+
+  <!-- far hills -->
+  <path d="M0,560 C200,500 350,600 550,540 C750,480 900,560 1100,520 C1300,480 1450,540 1600,510 L1600,1000 L0,1000 Z" fill="url(#hillFar)"/>
+  <!-- mid hills -->
+  <path d="M0,660 C180,600 320,680 520,630 C740,575 920,660 1120,610 C1320,565 1460,630 1600,600 L1600,1000 L0,1000 Z" fill="url(#hillMid)"/>
+  <!-- near hills -->
+  <path d="M0,780 C220,720 380,800 600,750 C820,700 980,790 1200,740 C1360,705 1480,760 1600,730 L1600,1000 L0,1000 Z" fill="url(#hillNear)"/>
+
+  <!-- trail -->
+  <path d="M760,1000 C740,900 820,860 780,780 C750,720 690,700 700,640" fill="none" stroke="#ff8c42" stroke-width="10" stroke-linecap="round" stroke-dasharray="2 26" opacity="0.85"/>
+
+  <!-- pine trees silhouette cluster -->
+  <g fill="#061712" opacity="0.9">
+    <path d="M120,920 l40,-90 40,90 z"/>
+    <path d="M170,920 l46,-110 46,110 z"/>
+    <path d="M240,930 l34,-70 34,70 z"/>
+    <path d="M1360,940 l40,-90 40,90 z"/>
+    <path d="M1420,940 l50,-115 50,115 z"/>
+  </g>
+</svg>

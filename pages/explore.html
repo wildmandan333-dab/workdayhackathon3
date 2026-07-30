@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Explore — WildIndy</title>
+  <meta name="description" content="Browse every Indiana adventure by category, distance, season, and difficulty.">
+  <link rel="icon" type="image/svg+xml" href="../images/favicon.svg">
+  <link rel="stylesheet" href="../css/styles.css">
+</head>
+<body data-nav="explore.html">
+  <a class="skip-link" href="#main">Skip to content</a>
+  <header id="site-nav" class="site-nav"></header>
+
+  <main id="main">
+    <section class="section" style="padding-top: var(--space-4);">
+      <div class="container">
+        <div class="section-head" style="margin-bottom: var(--space-3);">
+          <h1>Explore Indiana</h1>
+          <p>Filter by category, distance, season, difficulty, or just search for a vibe.</p>
+        </div>
+
+        <div class="category-chip-row" id="category-chips" style="margin-bottom: var(--space-3);"></div>
+
+        <div class="filter-bar">
+          <div class="filter-row">
+            <div class="filter-field search-field">
+              <label for="search-input">Search</label>
+              <input type="search" id="search-input" placeholder="Waterfalls, ghost towns, pie&hellip;">
+            </div>
+            <div class="filter-field">
+              <label for="filter-distance">Max distance</label>
+              <select id="filter-distance">
+                <option value="any">Any distance</option>
+                <option value="30">Under 30 mi</option>
+                <option value="60">Under 60 mi</option>
+                <option value="100">Under 100 mi</option>
+                <option value="200">Under 200 mi</option>
+              </select>
+            </div>
+            <div class="filter-field">
+              <label for="filter-season">Best season</label>
+              <select id="filter-season">
+                <option value="any">Any season</option>
+                <option value="Spring">Spring</option>
+                <option value="Summer">Summer</option>
+                <option value="Fall">Fall</option>
+                <option value="Winter">Winter</option>
+              </select>
+            </div>
+            <div class="filter-field">
+              <label for="filter-difficulty">Difficulty</label>
+              <select id="filter-difficulty">
+                <option value="any">Any difficulty</option>
+                <option value="Easy">Easy</option>
+                <option value="Moderate">Moderate</option>
+                <option value="Hard">Hard</option>
+              </select>
+            </div>
+          </div>
+          <div class="checkbox-row">
+            <label class="checkbox-field"><input type="checkbox" id="filter-kid"> Kid friendly</label>
+            <label class="checkbox-field"><input type="checkbox" id="filter-dog"> Dog friendly</label>
+            <label class="checkbox-field"><input type="checkbox" id="filter-free"> Free</label>
+          </div>
+        </div>
+
+        <p class="results-count" id="results-count"></p>
+        <ul class="card-grid" id="explore-grid"></ul>
+        <div class="empty-state" id="empty-state" hidden>
+          <p>🎲 Nothing matches those filters. Try widening your search.</p>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer id="site-footer" class="site-footer"></footer>
+
+  <script src="../js/app.js"></script>
+  <script src="../js/search.js"></script>
+</body>
+</html>

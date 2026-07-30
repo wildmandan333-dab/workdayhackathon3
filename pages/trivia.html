@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Trivia — WildIndy</title>
+  <meta name="description" content="Random multiple-choice Indiana trivia. Track your score as you play.">
+  <link rel="icon" type="image/svg+xml" href="../images/favicon.svg">
+  <link rel="stylesheet" href="../css/styles.css">
+</head>
+<body data-nav="trivia.html">
+  <a class="skip-link" href="#main">Skip to content</a>
+  <header id="site-nav" class="site-nav"></header>
+
+  <main id="main">
+    <section class="section" style="padding-top: var(--space-3);">
+      <div class="container">
+        <div class="section-head" style="margin-bottom: var(--space-3);">
+          <h1>Indiana Trivia</h1>
+          <p>How well do you actually know this state?</p>
+        </div>
+
+        <div class="trivia-card">
+          <div class="trivia-score">
+            <span id="trivia-score">Score: 0 / 0</span>
+            <button class="btn btn-ghost" id="trivia-reset" type="button" style="padding:0.3rem 0.7rem;">Reset</button>
+          </div>
+          <p class="trivia-question" id="trivia-question"></p>
+          <div class="trivia-choices" id="trivia-choices"></div>
+          <p class="trivia-fact" id="trivia-fact"></p>
+          <div class="trivia-next">
+            <button class="btn btn-primary" id="trivia-next" type="button" hidden>Next Question &rarr;</button>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer id="site-footer" class="site-footer"></footer>
+
+  <script src="../js/app.js"></script>
+  <script src="../js/trivia.js"></script>
+</body>
+</html>

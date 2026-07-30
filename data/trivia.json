@@ -1,0 +1,114 @@
+[
+  {
+    "id": 1,
+    "question": "What is Indiana's largest waterfall by volume?",
+    "choices": ["Anderson Falls", "Cataract Falls", "Clifty Falls", "Deer Creek Falls"],
+    "answer": 1,
+    "fact": "Cataract Falls near Cloverdale drops in two tiers and once powered a working gristmill."
+  },
+  {
+    "id": 2,
+    "question": "Which small Indiana town has one of the largest National Historic Landmark districts in the country?",
+    "choices": ["Nashville", "Zionsville", "Madison", "Metamora"],
+    "answer": 2,
+    "fact": "Madison's riverfront district preserves over 130 blocks of 19th-century architecture."
+  },
+  {
+    "id": 3,
+    "question": "Indiana is sometimes called the 'Covered Bridge Capital of the World.' Which county earns that title?",
+    "choices": ["Brown County", "Parke County", "Fulton County", "Bartholomew County"],
+    "answer": 1,
+    "fact": "Parke County has more than 30 historic covered bridges and hosts a huge festival every October."
+  },
+  {
+    "id": 4,
+    "question": "What was West Baden Springs Hotel once nicknamed for its enormous domed atrium?",
+    "choices": ["The Grand Palace", "The 8th Wonder of the World", "The Hoosier Colosseum", "The Sky Dome"],
+    "answer": 1,
+    "fact": "Its atrium dome was the largest free-standing dome in the world for decades after opening in 1902."
+  },
+  {
+    "id": 5,
+    "question": "Which library in Evansville is famously said to be haunted by the 'Grey Lady'?",
+    "choices": ["Willard Library", "Allen County Public Library", "Monroe County Library", "Rooney Library"],
+    "answer": 0,
+    "fact": "Willard Library livestreams a webcam of the basement, hoping to catch a glimpse of its resident ghost."
+  },
+  {
+    "id": 6,
+    "question": "What discovered Marengo Cave in 1883?",
+    "choices": ["A mining crew", "Two kids exploring", "A farmer's dog", "A team of geologists"],
+    "answer": 1,
+    "fact": "Two local children stumbled onto the cave entrance while exploring — it's now a National Natural Landmark."
+  },
+  {
+    "id": 7,
+    "question": "Fair Oaks Farms is best known as a destination for which kind of tour?",
+    "choices": ["Coal mining", "Working dairy farm", "Steel manufacturing", "Wine production"],
+    "answer": 1,
+    "fact": "Visitors can watch calves being born and ride through a working dairy operation."
+  },
+  {
+    "id": 8,
+    "question": "Which state park is known for deep sandstone canyons and cliffside ladders?",
+    "choices": ["Turkey Run State Park", "McCormick's Creek State Park", "Brown County State Park", "Pokagon State Park"],
+    "answer": 0,
+    "fact": "Turkey Run's canyon trails require climbing wooden ladders bolted directly into the rock."
+  },
+  {
+    "id": 9,
+    "question": "Angel Mounds State Historic Site preserves the remains of a city built by which culture?",
+    "choices": ["Hopewell", "Mississippian", "Iroquois", "Shawnee"],
+    "answer": 1,
+    "fact": "Angel Mounds was a thriving Mississippian settlement roughly 600 years ago, home to thousands of people."
+  },
+  {
+    "id": 10,
+    "question": "What Indianapolis restaurant is famous for a shrimp cocktail sauce hot enough to be a dare?",
+    "choices": ["St. Elmo Steak House", "Shapiro's Delicatessen", "The Slippery Noodle Inn", "Bynum's Steakhouse"],
+    "answer": 0,
+    "fact": "St. Elmo has served its fiery signature shrimp cocktail since 1902."
+  },
+  {
+    "id": 11,
+    "question": "The Fulton County Round Barn Museum in Rochester celebrates a peculiar trend in Indiana architecture. What is it?",
+    "choices": ["Round barns", "Octagon houses", "Stone silos", "Windmills"],
+    "answer": 0,
+    "fact": "Indiana once had a genuine round-barn building fad — the museum collected several onto one fairground."
+  },
+  {
+    "id": 12,
+    "question": "Conner Prairie recreates frontier life set in roughly what year?",
+    "choices": ["1712", "1836", "1901", "1955"],
+    "answer": 1,
+    "fact": "Conner Prairie's living history village is set in 1836, complete with costumed interpreters."
+  },
+  {
+    "id": 13,
+    "question": "Which natural rock formation rises straight out of Sugar Creek near Rockville?",
+    "choices": ["Seven Pillars", "Devil's Backbone", "Sugar Bluff", "Standing Rock"],
+    "answer": 0,
+    "fact": "Seven Pillars can be reached by a short hike or by paddling right up to its base."
+  },
+  {
+    "id": 14,
+    "question": "Indiana Dunes National Park sits along the shore of which Great Lake?",
+    "choices": ["Lake Erie", "Lake Huron", "Lake Michigan", "Lake Superior"],
+    "answer": 2,
+    "fact": "The Dunes rise right along Lake Michigan and are among the most biodiverse parks in the National Park System."
+  },
+  {
+    "id": 15,
+    "question": "The Studebaker National Museum in South Bend traces the history of what company?",
+    "choices": ["A steel foundry", "A wagon and automobile maker", "An airplane manufacturer", "A furniture company"],
+    "answer": 1,
+    "fact": "Studebaker built wagons for the Civil War before becoming a major American automaker."
+  },
+  {
+    "id": 16,
+    "question": "The World's Largest Ball of Paint in Alexandria is made of roughly how many coats of paint?",
+    "choices": ["About 200", "About 2,700", "About 27,000", "About 270,000"],
+    "answer": 2,
+    "fact": "Started as a single baseball, it's been repainted thousands of times over more than five decades."
+  }
+]

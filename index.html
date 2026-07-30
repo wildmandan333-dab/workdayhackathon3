@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>WildIndy — Discover Indiana Differently</title>
+  <meta name="description" content="WildIndy is your button for unexpected Indiana adventures — waterfalls, ghost towns, covered bridges, and roadside oddities. Press Take Me Somewhere and go.">
+  <link rel="icon" type="image/svg+xml" href="images/favicon.svg">
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body data-nav="index.html">
+  <a class="skip-link" href="#main">Skip to content</a>
+  <header id="site-nav" class="site-nav"></header>
+
+  <main id="main">
+    <section class="hero">
+      <img class="hero-bg" src="images/hero/home-hero.svg" alt="" role="presentation">
+      <div class="hero-overlay">
+        <h1 class="hero-logo">Wild<span class="wild">Indy</span></h1>
+        <p class="hero-tagline">Discover Indiana Differently</p>
+        <button class="btn btn-primary btn-lg dice-btn" id="btn-random" type="button">
+          <span class="dice-emoji">🎲</span> Take Me Somewhere
+        </button>
+        <div class="result-card" id="random-result" aria-live="polite"></div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="container">
+        <div class="section-head fade-in">
+          <h2>💎 Hidden Gems</h2>
+          <p>The spots most people drive right past. Don't be most people.</p>
+        </div>
+        <ul class="card-grid" id="hidden-gems-grid"></ul>
+        <div class="section-foot">
+          <a class="btn btn-secondary" href="pages/explore.html?category=hidden-gems">See all hidden gems</a>
+        </div>
+      </div>
+    </section>
+
+    <section class="section section-alt">
+      <div class="container">
+        <div class="section-head fade-in">
+          <h2>🚗 Weekend Adventures</h2>
+          <p>Close enough for a Saturday, good enough to skip the couch.</p>
+        </div>
+        <ul class="card-grid" id="weekend-grid"></ul>
+        <div class="section-foot">
+          <a class="btn btn-secondary" href="pages/explore.html">Explore everything</a>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="container">
+        <div class="section-head fade-in">
+          <h2>✅ Indiana Bucket List</h2>
+          <p>Check off adventures as you go. Your progress lives right in this browser.</p>
+        </div>
+        <div class="teaser-card fade-in text-center" id="bucket-teaser" style="max-width:480px; margin:0 auto;">
+          <p class="teaser-count">Loading your progress&hellip;</p>
+          <a class="btn btn-primary" href="pages/bucket-list.html">Open my bucket list</a>
+        </div>
+      </div>
+    </section>
+
+    <section class="section section-alt">
+      <div class="container text-center">
+        <div class="section-head fade-in">
+          <h2>🗺️ Interactive Map</h2>
+          <p>Every adventure in this app, plotted, color-coded, and filterable.</p>
+        </div>
+        <a class="btn btn-primary" href="pages/map.html">Open the map</a>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="container two-col">
+        <div class="photo-of-week fade-in">
+          <h2>📸 Photo of the Week</h2>
+          <div id="photo-of-week"></div>
+        </div>
+        <div class="fade-in" id="home-trivia">
+          <h2>🎯 Random Trivia</h2>
+          <div class="teaser-card">
+            <p class="trivia-question" id="home-trivia-question" style="font-size:1.05rem;"></p>
+            <div class="trivia-choices" id="home-trivia-choices"></div>
+            <div class="trivia-next" style="margin-top:1rem;">
+              <a class="btn btn-ghost" href="pages/trivia.html">Play full trivia &rarr;</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer id="site-footer" class="site-footer"></footer>
+
+  <script src="js/app.js"></script>
+  <script src="js/random.js"></script>
+  <script src="js/home.js"></script>
+</body>
+</html>
