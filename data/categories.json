@@ -1,0 +1,14 @@
+[
+  { "id": "waterfalls", "name": "Waterfalls", "icon": "💧", "color": "#2E86AB" },
+  { "id": "hiking", "name": "Hiking", "icon": "🥾", "color": "#2F6F4E" },
+  { "id": "small-towns", "name": "Small Towns", "icon": "🏘️", "color": "#E67E22" },
+  { "id": "food", "name": "Food", "icon": "🍔", "color": "#C0392B" },
+  { "id": "scenic-drives", "name": "Scenic Drives", "icon": "🛣️", "color": "#8E44AD" },
+  { "id": "covered-bridges", "name": "Covered Bridges", "icon": "🌉", "color": "#8B5E34" },
+  { "id": "museums", "name": "Museums", "icon": "🏛️", "color": "#16A085" },
+  { "id": "ghost-stories", "name": "Ghost Stories", "icon": "👻", "color": "#4A4E69" },
+  { "id": "roadside-attractions", "name": "Roadside Attractions", "icon": "🎡", "color": "#D6336C" },
+  { "id": "nature", "name": "Nature", "icon": "🌳", "color": "#27AE60" },
+  { "id": "history", "name": "History", "icon": "📜", "color": "#34495E" },
+  { "id": "hidden-gems", "name": "Hidden Gems", "icon": "💎", "color": "#F1C40F" }
+]

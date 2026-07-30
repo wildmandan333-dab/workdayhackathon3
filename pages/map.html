@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Map — WildIndy</title>
+  <meta name="description" content="Every WildIndy adventure plotted on an interactive map of Indiana, color-coded by category.">
+  <link rel="icon" type="image/svg+xml" href="../images/favicon.svg">
+  <link rel="stylesheet" href="../vendor/leaflet/leaflet.css">
+  <link rel="stylesheet" href="../css/styles.css">
+</head>
+<body data-nav="map.html">
+  <a class="skip-link" href="#main">Skip to content</a>
+  <header id="site-nav" class="site-nav"></header>
+
+  <main id="main">
+    <section class="section" style="padding-top: var(--space-3);">
+      <div class="container">
+        <div class="section-head" style="margin-bottom: var(--space-2); max-width: 100%;">
+          <h1>Interactive Map</h1>
+          <p>Click a category to hide or show its markers. Click a marker for details.</p>
+        </div>
+        <div class="map-legend" id="map-legend"></div>
+        <div id="map" role="application" aria-label="Map of Indiana adventures"></div>
+      </div>
+    </section>
+  </main>
+
+  <footer id="site-footer" class="site-footer"></footer>
+
+  <script src="../vendor/leaflet/leaflet.js"></script>
+  <script src="../js/app.js"></script>
+  <script src="../js/map.js"></script>
+</body>
+</html>

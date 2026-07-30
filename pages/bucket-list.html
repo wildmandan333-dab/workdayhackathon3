@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Bucket List — WildIndy</title>
+  <meta name="description" content="Check off Indiana adventures as you complete them. Your progress is saved right in your browser.">
+  <link rel="icon" type="image/svg+xml" href="../images/favicon.svg">
+  <link rel="stylesheet" href="../css/styles.css">
+</head>
+<body data-nav="bucket-list.html">
+  <a class="skip-link" href="#main">Skip to content</a>
+  <header id="site-nav" class="site-nav"></header>
+
+  <main id="main">
+    <section class="section" style="padding-top: var(--space-3);">
+      <div class="container">
+        <div class="section-head" style="margin-bottom: var(--space-2); max-width: 100%;">
+          <h1>Indiana Bucket List</h1>
+          <p>Check off every adventure you complete. Saved locally in this browser &mdash; no login required.</p>
+        </div>
+
+        <div class="bucket-toolbar">
+          <span class="progress-label" id="progress-label">0 of 0 adventures (0%)</span>
+          <button class="btn btn-ghost" id="btn-clear-checked" type="button">Clear progress</button>
+        </div>
+        <div class="progress-wrap">
+          <div class="progress-bar" id="progress-bar"></div>
+        </div>
+
+        <ul class="bucket-list-grid" id="bucket-list-grid" style="margin-top: var(--space-3);"></ul>
+      </div>
+    </section>
+  </main>
+
+  <footer id="site-footer" class="site-footer"></footer>
+
+  <script src="../js/app.js"></script>
+  <script src="../js/bucketlist.js"></script>
+</body>
+</html>
